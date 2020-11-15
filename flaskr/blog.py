@@ -17,10 +17,10 @@ def main():
 def index(password):
     if(verify_password(password)):
         print("==========good job============")
-        return redirect(url_for('blog.success'))
+        return 1
     else: 
         print("==========yikes==========")
-        return redirect(url_for('blog.failiure'))
+        return 0
 
 @bp.route('/success')
 def success():
@@ -32,22 +32,23 @@ def failiure():
 
 def verify_password(inPassword):
     result = True
-    longPadding = ' '*20
+    longPadding = ' '*6
     paddedInPassword = (longPadding + inPassword)[-1:-(len(longPadding)):-1]
     paddedSecretPassword = (longPadding + secretPassword)[-1:-(len(longPadding)):-1]
     print(paddedSecretPassword)
     print(paddedInPassword)
 
-    delay = 0.07
+    delay_correct = 0.1
+    delay_wrong = 0.01
     for i in range(len(paddedSecretPassword)):
         print("index - " + str(i))
         if(paddedInPassword[i] != paddedSecretPassword[i]):
             #TODO: add delay functionality here 
             result = False          
-            time.sleep(delay- random.uniform(0.01,0.05))
+            time.sleep(delay_wrong)
             print("=========Incorrect letter=========")
         else:
-            time.sleep(delay)
+            time.sleep(delay_correct)
             print("=========Correct letter=========")
 
     return result
