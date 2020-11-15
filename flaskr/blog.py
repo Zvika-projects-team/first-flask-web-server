@@ -42,11 +42,12 @@ def verify_password(inPassword):
     delay_wrong = 0.01
     for i in range(len(paddedSecretPassword)):
         print("index - " + str(i))
+        print(f"{paddedInPassword[i]} != {paddedSecretPassword[i]}")
         if(paddedInPassword[i] != paddedSecretPassword[i]):
             #TODO: add delay functionality here 
             result = False          
             time.sleep(delay_wrong)
-            print("=========Incorrect letter=========")
+            print(f"=========Incorrect letter=========")
         else:
             time.sleep(delay_correct)
             print("=========Correct letter=========")
