@@ -1,2 +1,1 @@
-web: gunicorn
-wsgi:flaskr
+web: gunicorn wsgi:flaskr
