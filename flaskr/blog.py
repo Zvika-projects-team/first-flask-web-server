@@ -32,19 +32,19 @@ def failiure():
 
 def verify_password(inPassword):
     result = True
-    longPadding = '_'*30
+    longPadding = ' '*20
     paddedInPassword = (longPadding + inPassword)[-1:-(len(longPadding)):-1]
     paddedSecretPassword = (longPadding + secretPassword)[-1:-(len(longPadding)):-1]
     print(paddedSecretPassword)
     print(paddedInPassword)
 
-    delay = 0.7
+    delay = 0.07
     for i in range(len(paddedSecretPassword)):
         print("index - " + str(i))
         if(paddedInPassword[i] != paddedSecretPassword[i]):
             #TODO: add delay functionality here 
             result = False          
-            time.sleep(delay- random.uniform(0.01,0.2))
+            time.sleep(delay- random.uniform(0.01,0.05))
             print("=========Incorrect letter=========")
         else:
             time.sleep(delay)
