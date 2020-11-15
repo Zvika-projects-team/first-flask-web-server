@@ -17,10 +17,10 @@ def main():
 def index(password):
     if(verify_password(password)):
         print("==========good job============")
-        return 1
+        return b'1'
     else: 
         print("==========yikes==========")
-        return 0
+        return b'0'
 
 @bp.route('/success')
 def success():
@@ -32,13 +32,13 @@ def failiure():
 
 def verify_password(inPassword):
     result = True
-    longPadding = ' '*6
+    longPadding = ' '*7
     paddedInPassword = (longPadding + inPassword)[-1:-(len(longPadding)):-1]
     paddedSecretPassword = (longPadding + secretPassword)[-1:-(len(longPadding)):-1]
     print(paddedSecretPassword)
     print(paddedInPassword)
 
-    delay_correct = 0.1
+    delay_correct = 2
     delay_wrong = 0.01
     for i in range(len(paddedSecretPassword)):
         print("index - " + str(i))
