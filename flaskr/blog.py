@@ -10,10 +10,7 @@ bp = Blueprint('blog', __name__)
 Pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 secretPassword = "Hi2U"
 
-delay = 3
-delay_next = False
-
-# next_delay = 0.3
+delay = 1
 
 
 @bp.route('/')
@@ -23,8 +20,12 @@ def main():
 
 @bp.route('/<string:password>/', methods=('GET', 'POST'))
 def auth(password=''):
+    global found, delay_next, prev_password
     if (verify_password(password)):
         print("==========good job============")
+        found = False
+        delay_next = False
+        prev_password = ""
         return b'1'
     else:
         print("==========yikes==========")
@@ -39,55 +40,37 @@ def verify_password(inPassword):
     print(paddedSecretPassword)
     print(paddedInPassword)
 
-    return delay_basic(paddedInPassword, paddedSecretPassword)
-
-    # return delay_basic(paddedInPassword,paddedSecretPassword)
+    return encryption(paddedInPassword, paddedSecretPassword)
 
 
-def delay_basic(paddedInPassword, paddedSecretPassword):
-    global delay, delay_next, found
-    found = False
+def encryption(paddedInPassword, paddedSecretPassword):
+    global delay
     result = True
     count_mistakes = 0
     for i in range(len(paddedSecretPassword)):
-        # print("index - " + str(i))
-        # print(f"{paddedInPassword[i]} != {paddedSecretPassword[i]}")
 
-        padded_in_char = paddedInPassword[i]
-        secret_char = paddedSecretPassword[i]
         input_char = check_num_of_pool_chars(paddedInPassword)
         elegant_statement = ((input_char - 1) % 2 == 0 and ((input_char - 1) / 2) % 2 == 0) or (
                 (input_char - 2) % 2 == 0 and ((input_char - 2) / 2) % 2 == 0)
 
         if paddedInPassword[i] != paddedSecretPassword[i]:
-            # underscore code
+        
             if input_char == 0:
-                if delay_next:
+                if(check_num_of_underscores(paddedInPassword) == len(secretPassword) + 2):
                     time.sleep(delay)
-                    print("-*-*-*-*-*-*-*-*-*-made it-*-*-*-*-*-*-*-*-*-*-")
-                    delay_next = False
-                    found = True
-
-                if (count_mistakes > len(secretPassword)) and not found:
-                    delay_next = True
-
-                count_mistakes += 1
-                print(f"mistakes - {count_mistakes}")
-
             else:
                 if input_char != 0:
                     if not elegant_statement:
                         time.sleep(delay)
-                    # print(f"=========Incorrect letter=========")
 
             result = False
-            # print(f"=========Incorrect letter=========")
-
+            
         else:
             if input_char > 0:
                 if elegant_statement:
                     time.sleep(delay)
                 # print("=========Correct letter=========")
+    prev_password = paddedInPassword
     return result
 
 
@@ -97,3 +80,10 @@ def check_num_of_pool_chars(password):
         if char in Pool:
             input_char += 1
     return input_char
+
+def check_num_of_underscores(password):
+    count = 0
+    for char in password:
+        if char not in Pool and char != ' ':
+            count +=1
+    return count
