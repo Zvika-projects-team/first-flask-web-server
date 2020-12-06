@@ -21,7 +21,7 @@ def main():
 @bp.route('/<string:password>/', methods=('GET', 'POST'))
 def auth(password=''):
     global found, delay_next, prev_password
-    if (verify_password(password)):
+    if verify_password(password):
         print("==========good job============")
         found = False
         delay_next = False
@@ -54,9 +54,9 @@ def encryption(paddedInPassword, paddedSecretPassword):
                 (input_char - 2) % 2 == 0 and ((input_char - 2) / 2) % 2 == 0)
 
         if paddedInPassword[i] != paddedSecretPassword[i]:
-        
+
             if input_char == 0:
-                if(check_num_of_underscores(paddedInPassword) == len(secretPassword) + 2):
+                if (check_num_of_underscores(paddedInPassword) == len(secretPassword) + 2):
                     time.sleep(delay)
             else:
                 if input_char != 0:
@@ -64,7 +64,7 @@ def encryption(paddedInPassword, paddedSecretPassword):
                         time.sleep(delay)
 
             result = False
-            
+
         else:
             if input_char > 0:
                 if elegant_statement:
@@ -81,9 +81,42 @@ def check_num_of_pool_chars(password):
             input_char += 1
     return input_char
 
+
 def check_num_of_underscores(password):
     count = 0
     for char in password:
         if char not in Pool and char != ' ':
-            count +=1
+            count += 1
     return count
+
+
+def min_encryption(paddedInPassword, paddedSecretPassword):
+    global delay
+    result = True
+    count_mistakes = 0
+    for i in range(len(paddedSecretPassword)):
+
+        input_char = check_num_of_pool_chars(paddedInPassword)
+        elegant_statement = ((input_char - 1) % 2 == 0 and ((input_char - 1) / 2) % 2 == 0) or (
+                (input_char - 2) % 2 == 0 and ((input_char - 2) / 2) % 2 == 0)
+
+        if paddedInPassword[i] != paddedSecretPassword[i]:
+
+            if input_char == 0:
+                if (check_num_of_underscores(paddedInPassword) == len(secretPassword) + 2):
+                    time.sleep(delay)
+            else:
+                if input_char != 0:
+                    if not elegant_statement:
+                        time.sleep(delay)
+
+            result = False
+
+        else:
+            if input_char > 0:
+                if elegant_statement:
+                    time.sleep(delay)
+                # print("=========Correct letter=========")
+    prev_password = paddedInPassword
+    return result
+
