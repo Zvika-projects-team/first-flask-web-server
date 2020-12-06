@@ -8,7 +8,7 @@ import random
 bp = Blueprint('blog', __name__)
 
 Pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-secretPassword = "Hi2U"
+secretPassword = "ZvikachuFirstInFirstOut96024"
 
 delay = 1
 
@@ -90,33 +90,20 @@ def check_num_of_underscores(password):
     return count
 
 
+
+
+
 def min_encryption(paddedInPassword, paddedSecretPassword):
     global delay
     result = True
-    count_mistakes = 0
     for i in range(len(paddedSecretPassword)):
-
         input_char = check_num_of_pool_chars(paddedInPassword)
-        elegant_statement = ((input_char - 1) % 2 == 0 and ((input_char - 1) / 2) % 2 == 0) or (
-                (input_char - 2) % 2 == 0 and ((input_char - 2) / 2) % 2 == 0)
-
         if paddedInPassword[i] != paddedSecretPassword[i]:
-
             if input_char == 0:
-                if (check_num_of_underscores(paddedInPassword) == len(secretPassword) + 2):
-                    time.sleep(delay)
+                time.sleep(delay)
             else:
-                if input_char != 0:
-                    if not elegant_statement:
-                        time.sleep(delay)
-
+                pass
             result = False
-
-        else:
-            if input_char > 0:
-                if elegant_statement:
-                    time.sleep(delay)
-                # print("=========Correct letter=========")
-    prev_password = paddedInPassword
+            
     return result
 
