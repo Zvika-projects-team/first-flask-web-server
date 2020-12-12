@@ -8,7 +8,7 @@ import random
 bp = Blueprint('blog', __name__)
 
 Pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-secretPassword = "ZvikachuFirstInFirstOut96024"
+secretPassword = "ZviG"
 
 delay = 1
 
